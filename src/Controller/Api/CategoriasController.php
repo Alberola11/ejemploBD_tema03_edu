@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 
 use App\Entity\Categorias;
+use App\Form\CategoriasFormType;
 use App\Repository\CategoriasRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -49,6 +50,9 @@ public function getCategorias(){
     //el request es para que el usuario envie lo que el selecione
 public function createCategoria(Request $request){
     $categoria= new Categorias();
+    //Aqui estamos haciendo el form
+    $form= $this->createForm(CategoriasFormType::class, $categoria);
+
     $categoria->setCategoria($request->get("categoria"));
     $this->em->persist($categoria);
     $this->em->flush();
